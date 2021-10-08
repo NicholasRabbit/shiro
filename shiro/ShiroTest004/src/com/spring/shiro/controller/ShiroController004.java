@@ -32,9 +32,8 @@ public class ShiroController004 {
             }catch(AuthenticationException e){
                 System.out.println("总异常==>" + e.getMessage());
             }
-
         }
 
-        return "list";
+        return "redirect:/list.jsp";
     }
 }

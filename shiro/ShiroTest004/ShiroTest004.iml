@@ -21,9 +21,9 @@
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/conf" type="java-resource" />
     </content>
-    <orderEntry type="jdk" jdkName="1.8" jdkType="JavaSDK" />
+    <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" scope="PROVIDED" name="Tomcat 8.5.37" level="application_server_libraries" />
+    <orderEntry type="library" scope="PROVIDED" name="Tomcat 7.0.108" level="application_server_libraries" />
     <orderEntry type="module-library">
       <library>
         <CLASSES>
@@ -31,80 +31,34 @@
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$MODULE_DIR$/../../../Shiro/Shiro常用jar包及源码/shiro-source/shiro-root-1.2.6-source-release.zip!/shiro-root-1.2.6/core/src/main/java" />
-          <root url="jar://$MODULE_DIR$/../../../Shiro/Shiro常用jar包及源码/shiro-source/shiro-root-1.2.6-source-release.zip!/shiro-root-1.2.6/core/src/test/java" />
-          <root url="jar://$MODULE_DIR$/../../../Shiro/Shiro常用jar包及源码/shiro-source/shiro-root-1.2.6-source-release.zip!/shiro-root-1.2.6/samples/aspectj/src/main/java" />
-          <root url="jar://$MODULE_DIR$/../../../Shiro/Shiro常用jar包及源码/shiro-source/shiro-root-1.2.6-source-release.zip!/shiro-root-1.2.6/samples/aspectj/src/test/java" />
-          <root url="jar://$MODULE_DIR$/../../../Shiro/Shiro常用jar包及源码/shiro-source/shiro-root-1.2.6-source-release.zip!/shiro-root-1.2.6/samples/quickstart/src/main/java" />
-          <root url="jar://$MODULE_DIR$/../../../Shiro/Shiro常用jar包及源码/shiro-source/shiro-root-1.2.6-source-release.zip!/shiro-root-1.2.6/samples/spring-client/src/main/java" />
-          <root url="jar://$MODULE_DIR$/../../../Shiro/Shiro常用jar包及源码/shiro-source/shiro-root-1.2.6-source-release.zip!/shiro-root-1.2.6/samples/spring-hibernate/src/main/java" />
-          <root url="jar://$MODULE_DIR$/../../../Shiro/Shiro常用jar包及源码/shiro-source/shiro-root-1.2.6-source-release.zip!/shiro-root-1.2.6/samples/spring/src/main/java" />
-          <root url="jar://$MODULE_DIR$/../../../Shiro/Shiro常用jar包及源码/shiro-source/shiro-root-1.2.6-source-release.zip!/shiro-root-1.2.6/samples/standalone/src/main/java" />
-          <root url="jar://$MODULE_DIR$/../../../Shiro/Shiro常用jar包及源码/shiro-source/shiro-root-1.2.6-source-release.zip!/shiro-root-1.2.6/samples/web/src/test/java" />
-          <root url="jar://$MODULE_DIR$/../../../Shiro/Shiro常用jar包及源码/shiro-source/shiro-root-1.2.6-source-release.zip!/shiro-root-1.2.6/support/aspectj/src/main/aspect" />
-          <root url="jar://$MODULE_DIR$/../../../Shiro/Shiro常用jar包及源码/shiro-source/shiro-root-1.2.6-source-release.zip!/shiro-root-1.2.6/support/aspectj/src/main/java" />
-          <root url="jar://$MODULE_DIR$/../../../Shiro/Shiro常用jar包及源码/shiro-source/shiro-root-1.2.6-source-release.zip!/shiro-root-1.2.6/support/aspectj/src/test/java" />
-          <root url="jar://$MODULE_DIR$/../../../Shiro/Shiro常用jar包及源码/shiro-source/shiro-root-1.2.6-source-release.zip!/shiro-root-1.2.6/support/cas/src/main/java" />
-          <root url="jar://$MODULE_DIR$/../../../Shiro/Shiro常用jar包及源码/shiro-source/shiro-root-1.2.6-source-release.zip!/shiro-root-1.2.6/support/ehcache/src/main/java" />
-          <root url="jar://$MODULE_DIR$/../../../Shiro/Shiro常用jar包及源码/shiro-source/shiro-root-1.2.6-source-release.zip!/shiro-root-1.2.6/support/ehcache/src/test/java" />
-          <root url="jar://$MODULE_DIR$/../../../Shiro/Shiro常用jar包及源码/shiro-source/shiro-root-1.2.6-source-release.zip!/shiro-root-1.2.6/support/guice/src/main/java" />
-          <root url="jar://$MODULE_DIR$/../../../Shiro/Shiro常用jar包及源码/shiro-source/shiro-root-1.2.6-source-release.zip!/shiro-root-1.2.6/support/guice/src/test/java" />
-          <root url="jar://$MODULE_DIR$/../../../Shiro/Shiro常用jar包及源码/shiro-source/shiro-root-1.2.6-source-release.zip!/shiro-root-1.2.6/support/quartz/src/main/java" />
-          <root url="jar://$MODULE_DIR$/../../../Shiro/Shiro常用jar包及源码/shiro-source/shiro-root-1.2.6-source-release.zip!/shiro-root-1.2.6/support/spring/src/main/java" />
-          <root url="jar://$MODULE_DIR$/../../../Shiro/Shiro常用jar包及源码/shiro-source/shiro-root-1.2.6-source-release.zip!/shiro-root-1.2.6/support/spring/src/test/java" />
-          <root url="jar://$MODULE_DIR$/../../../Shiro/Shiro常用jar包及源码/shiro-source/shiro-root-1.2.6-source-release.zip!/shiro-root-1.2.6/tools/hasher/src/main/java" />
-          <root url="jar://$MODULE_DIR$/../../../Shiro/Shiro常用jar包及源码/shiro-source/shiro-root-1.2.6-source-release.zip!/shiro-root-1.2.6/web/src/main/java" />
-          <root url="jar://$MODULE_DIR$/../../../Shiro/Shiro常用jar包及源码/shiro-source/shiro-root-1.2.6-source-release.zip!/shiro-root-1.2.6/web/src/test/java" />
+          <root url="jar://F:/Learning/Computer/Shiro/Shiro常用jar包及源码/shiro-source/shiro-root-1.2.6-source-release.zip!/shiro-root-1.2.6/core/src/main/java" />
+          <root url="jar://F:/Learning/Computer/Shiro/Shiro常用jar包及源码/shiro-source/shiro-root-1.2.6-source-release.zip!/shiro-root-1.2.6/core/src/test/java" />
+          <root url="jar://F:/Learning/Computer/Shiro/Shiro常用jar包及源码/shiro-source/shiro-root-1.2.6-source-release.zip!/shiro-root-1.2.6/samples/aspectj/src/main/java" />
+          <root url="jar://F:/Learning/Computer/Shiro/Shiro常用jar包及源码/shiro-source/shiro-root-1.2.6-source-release.zip!/shiro-root-1.2.6/samples/aspectj/src/test/java" />
+          <root url="jar://F:/Learning/Computer/Shiro/Shiro常用jar包及源码/shiro-source/shiro-root-1.2.6-source-release.zip!/shiro-root-1.2.6/samples/quickstart/src/main/java" />
+          <root url="jar://F:/Learning/Computer/Shiro/Shiro常用jar包及源码/shiro-source/shiro-root-1.2.6-source-release.zip!/shiro-root-1.2.6/samples/spring-client/src/main/java" />
+          <root url="jar://F:/Learning/Computer/Shiro/Shiro常用jar包及源码/shiro-source/shiro-root-1.2.6-source-release.zip!/shiro-root-1.2.6/samples/spring-hibernate/src/main/java" />
+          <root url="jar://F:/Learning/Computer/Shiro/Shiro常用jar包及源码/shiro-source/shiro-root-1.2.6-source-release.zip!/shiro-root-1.2.6/samples/spring/src/main/java" />
+          <root url="jar://F:/Learning/Computer/Shiro/Shiro常用jar包及源码/shiro-source/shiro-root-1.2.6-source-release.zip!/shiro-root-1.2.6/samples/standalone/src/main/java" />
+          <root url="jar://F:/Learning/Computer/Shiro/Shiro常用jar包及源码/shiro-source/shiro-root-1.2.6-source-release.zip!/shiro-root-1.2.6/samples/web/src/test/java" />
+          <root url="jar://F:/Learning/Computer/Shiro/Shiro常用jar包及源码/shiro-source/shiro-root-1.2.6-source-release.zip!/shiro-root-1.2.6/support/aspectj/src/main/aspect" />
+          <root url="jar://F:/Learning/Computer/Shiro/Shiro常用jar包及源码/shiro-source/shiro-root-1.2.6-source-release.zip!/shiro-root-1.2.6/support/aspectj/src/main/java" />
+          <root url="jar://F:/Learning/Computer/Shiro/Shiro常用jar包及源码/shiro-source/shiro-root-1.2.6-source-release.zip!/shiro-root-1.2.6/support/aspectj/src/test/java" />
+          <root url="jar://F:/Learning/Computer/Shiro/Shiro常用jar包及源码/shiro-source/shiro-root-1.2.6-source-release.zip!/shiro-root-1.2.6/support/cas/src/main/java" />
+          <root url="jar://F:/Learning/Computer/Shiro/Shiro常用jar包及源码/shiro-source/shiro-root-1.2.6-source-release.zip!/shiro-root-1.2.6/support/ehcache/src/main/java" />
+          <root url="jar://F:/Learning/Computer/Shiro/Shiro常用jar包及源码/shiro-source/shiro-root-1.2.6-source-release.zip!/shiro-root-1.2.6/support/ehcache/src/test/java" />
+          <root url="jar://F:/Learning/Computer/Shiro/Shiro常用jar包及源码/shiro-source/shiro-root-1.2.6-source-release.zip!/shiro-root-1.2.6/support/guice/src/main/java" />
+          <root url="jar://F:/Learning/Computer/Shiro/Shiro常用jar包及源码/shiro-source/shiro-root-1.2.6-source-release.zip!/shiro-root-1.2.6/support/guice/src/test/java" />
+          <root url="jar://F:/Learning/Computer/Shiro/Shiro常用jar包及源码/shiro-source/shiro-root-1.2.6-source-release.zip!/shiro-root-1.2.6/support/quartz/src/main/java" />
+          <root url="jar://F:/Learning/Computer/Shiro/Shiro常用jar包及源码/shiro-source/shiro-root-1.2.6-source-release.zip!/shiro-root-1.2.6/support/spring/src/main/java" />
+          <root url="jar://F:/Learning/Computer/Shiro/Shiro常用jar包及源码/shiro-source/shiro-root-1.2.6-source-release.zip!/shiro-root-1.2.6/support/spring/src/test/java" />
+          <root url="jar://F:/Learning/Computer/Shiro/Shiro常用jar包及源码/shiro-source/shiro-root-1.2.6-source-release.zip!/shiro-root-1.2.6/tools/hasher/src/main/java" />
+          <root url="jar://F:/Learning/Computer/Shiro/Shiro常用jar包及源码/shiro-source/shiro-root-1.2.6-source-release.zip!/shiro-root-1.2.6/web/src/main/java" />
+          <root url="jar://F:/Learning/Computer/Shiro/Shiro常用jar包及源码/shiro-source/shiro-root-1.2.6-source-release.zip!/shiro-root-1.2.6/web/src/test/java" />
         </SOURCES>
         <jarDirectory url="file://$MODULE_DIR$/web/WEB-INF/lib" recursive="false" />
       </library>
     </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/web/WEB-INF/lib/log4j.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/web/WEB-INF/lib/ehcache-core-2.6.8.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="slf4j-api-1.6.1">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/web/WEB-INF/lib/slf4j-api-1.6.1.jar!/" />
-          <root url="jar://$MODULE_DIR$/web/WEB-INF/lib/slf4j-log4j12-1.6.2.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="file://$MODULE_DIR$/web/WEB-INF/lib" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-        <jarDirectory url="file://$MODULE_DIR$/web/WEB-INF/lib" recursive="false" />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/web/WEB-INF/lib/spring-tx-4.0.0.RELEASE.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
+    <orderEntry type="library" name="java" level="project" />
   </component>
 </module>

@@ -4,7 +4,7 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <context:component-scan base-package="com.spring.shiro.service"></context:component-scan>
+    <context:component-scan base-package="com.spring.shiro"></context:component-scan>
 
     <!--1,配置shiro的SecurityManager-->
     <bean id="securityManager"  class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
@@ -26,7 +26,10 @@
     </bean>
 
     <!--3,配置Realm,需个人自定义一个Realm，要求实现Realm接口，或者实现其子类。可配置多个Realm-->
-    <bean id="realmOne"  class="com.spring.shiro.realm.ShiroRealm004">
+    <bean id="realmOne"  class="com.spring.shiro.realm.ShiroRealm">
+        <!--这里配置了加密属性，即可把用户输入的密码进行加密，MD5是加密方法，1024是加密的次数，
+            配置好之后密码“12345”会被加密1024次，因此在ShiroRealm004里的credentials也要加密尽心比对
+            注意和ShrioTest003的spring.xml配置文件的对比-->
         <property name="credentialsMatcher">
             <bean class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
                 <property name="hashAlgorithmName" value="MD5"></property>
@@ -51,6 +54,7 @@
             <value>
                 /login.jsp = anon
                 /shiro/login = anon
+                /shiro/logout = logout
 
                 #anything else requires authentication:
                 /** = authc
