@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:component-scan base-package="com.spring.shiro"></context:component-scan>
+
+    <!--1,配置shiro的SecurityManager-->
+    <bean id="securityManager"  class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <property name="cacheManager" ref="cacheManager"></property>
+        <property name="authenticator" ref="authenticator"></property>
+        <property name="realm"  ref="realmOne"></property>      <!--如果有多个realm可用reamls属性<property name="realms">-->
+
+    </bean>
+
+    <!--2，配置缓存管理器，注意要加入ehcahe.jar包，并指定好配置文件ehcahe.xml的位置-->
+    <bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+        <property name="cacheManagerConfigFile" value="classpath:ehcache.xml"></property>
+    </bean>
+    <!--这个的作用待分析？？-->
+    <bean id="authenticator"  class="org.apache.shiro.authc.pam.ModularRealmAuthenticator">
+        <property name="authenticationStrategy">
+            <bean class="org.apache.shiro.authc.pam.AtLeastOneSuccessfulStrategy"></bean>
+        </property>
+    </bean>
+
+    <!--3,配置Realm,需个人自定义一个Realm，要求实现Realm接口，或者实现其子类。可配置多个Realm-->
+    <bean id="realmOne"  class="com.spring.shiro.realm.ShiroRealm">
+        <!--这里配置了加密属性，即可把用户输入的密码进行加密，MD5是加密方法，1024是加密的次数，
+            配置好之后密码“12345”会被加密1024次，因此在ShiroRealm004里的credentials也要加密尽心比对
+            注意和ShrioTest003的spring.xml配置文件的对比-->
+        <property name="credentialsMatcher">
+            <bean class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+                <property name="hashAlgorithmName" value="MD5"></property>
+                <property name="hashIterations"  value="1024"></property>
+            </bean>
+        </property>
+    </bean>
+
+    <!--4,配置LifecyclePostBeanProcessor,它可自动调用在Spring IOC容器中shiro bean的生命周期的相关方法-->
+    <bean id="lifecycleBeanProcessor"  class="org.apache.shiro.spring.LifecycleBeanPostProcessor"></bean>
+
+    <!--5,在IOC容器中使用Shiro的注解,必须在配置LifecyclePostBeanProcessor后才可使用-->
+    <bean  class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"  depends-on="lifecycleBeanProcessor"></bean>
+    <bean  class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+        <property name="securityManager"  ref="securityManager"></property>
+    </bean>
+
+    <!--6,配置shiroFilter,注意id值要个web.xml文件内一致-->
+    <bean id="shiroFilter"  class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <property name="securityManager" ref="securityManager"/>       <!--注意这里别忘了这个securityManager属性,否则报BeanCreationException,Error creating bean with name 'shiroFilter'-->
+        <property name="filterChainDefinitions">
+            <value>
+                /login.jsp = anon
+                /shiro/login = anon
+                /shiro/logout = logout
+
+                #anything else requires authentication:
+                /** = authc
+            </value>
+        </property>
+    </bean>
+
+
+</beans>
