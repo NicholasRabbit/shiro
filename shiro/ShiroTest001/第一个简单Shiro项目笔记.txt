@@ -1,5 +1,0 @@
-shiro官方初级简单范例在“……shiro-source\shiro-root-1.2.6-source-release\shiro-root-1.2.6\samples”里面
-1，新建javase项目，注意使用4个jar包
-2，log4j.properties和shiro.ini要复制到类路径下，即src根目录下
-3，QuickStart.java复制过来，改好包路径后可直接运行
-4，后续可进行其他测试，更改设置等等
