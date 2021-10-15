@@ -8,17 +8,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+/*Shiro的认证策略范例
+1，默认是AtLeastOneSuccessfulStrategy，即有多个Realm认证的话，只要有一个成功即可
+2，AllSuccessfulStrategy, 要求必须全部认证成功才可通过
+3，FirstSuccessfulStrategy, 要求第一个Realm必须认证成功
+具体见spring.xml里的配置
+* */
+
 @Controller
 @RequestMapping(value="/shiro")
-public class ShiroController005 {
+public class ShiroController007 {
 
     @RequestMapping(value="/login", method = {RequestMethod.POST})
     public String login(@RequestParam("username") String username, @RequestParam("password") String password){
 
         Subject currentUser = SecurityUtils.getSubject();     //获取一个代表用户的对象
+
         if (!currentUser.isAuthenticated()) {
             //把用户名密码封装进token,模拟把用户名密码保存起来
-            UsernamePasswordToken  token = new UsernamePasswordToken(username, password);
+            UsernamePasswordToken token = new UsernamePasswordToken(username, password);
             token.setRememberMe(true);
             try{
                 currentUser.login(token);     //模拟登录

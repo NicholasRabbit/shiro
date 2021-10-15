@@ -18,7 +18,7 @@
     <bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
         <property name="cacheManagerConfigFile" value="classpath:ehcache.xml"></property>
     </bean>
-    <!--这个的作用待分析？？-->
+    <!--这个的作用：设置多个Realm的验证策略ShiroTest006会分析-->
     <bean id="authenticator"  class="org.apache.shiro.authc.pam.ModularRealmAuthenticator">
         <property name="authenticationStrategy">
             <bean class="org.apache.shiro.authc.pam.AtLeastOneSuccessfulStrategy"></bean>

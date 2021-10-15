@@ -8,17 +8,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+/*授权代码范例
+1，授权是指设定不同用户有不同的权限，只能访问他权限范围内的内容，也称访问控制
+2，详见spring.xml里shiroFilter的设置
+* */
+
 @Controller
 @RequestMapping(value="/shiro")
-public class ShiroController005 {
+public class ShiroController008 {
 
     @RequestMapping(value="/login", method = {RequestMethod.POST})
     public String login(@RequestParam("username") String username, @RequestParam("password") String password){
 
         Subject currentUser = SecurityUtils.getSubject();     //获取一个代表用户的对象
+
         if (!currentUser.isAuthenticated()) {
             //把用户名密码封装进token,模拟把用户名密码保存起来
-            UsernamePasswordToken  token = new UsernamePasswordToken(username, password);
+            UsernamePasswordToken token = new UsernamePasswordToken(username, password);
             token.setRememberMe(true);
             try{
                 currentUser.login(token);     //模拟登录

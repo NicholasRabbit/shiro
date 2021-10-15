@@ -8,15 +8,16 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 
 
-/*二，密码的MD5加密流程模拟，带有盐值的形式，注意和ShiroTest004对比
-因为在一个系统中密码可能重复，那么得到的MD5值就是一样的，这样不安全，所以引入盐值的概念
-盐值是指在加密过程中添加唯一的变量，一般是用户名，因为一个数据库中用户名不可重复。
+/*多Realm范例
+(1)多Realm是指多个Realm使用不同的加密算法，用处是在使用不同数据库时，一个用户可以加密出不同的密码。
+(2)多个Realm会依次验证密码是否正确，执行顺序按照spring.xml文件里写的顺序来
  */
-public class ShiroRealm extends AuthorizingRealm {
+public class ShiroRealmOne extends AuthorizingRealm {
 
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
-        //Shiro认证流程简单模拟
+
+        System.out.println("ShiroRealmOne==>");
         //1,向下转型
         UsernamePasswordToken upToken = (UsernamePasswordToken)token;
         //2,从token中获取用户名和密码
@@ -58,15 +59,12 @@ public class ShiroRealm extends AuthorizingRealm {
     }
 
     public static void main(String[] args) {
-        String  hashAlgorithmName = "MD5";
+        String  hashAlgorithmName = "MD5";     //ShiroRealmOne使用MD5加密规则
         Object credentials = "12345";
         int hashIterations = 1024;
         Object salt = ByteSource.Util.bytes("tom");     //用户名，自定义的，与上面username的值一致
-        Object saltAdmin = ByteSource.Util.bytes("admin");
         Object result = new SimpleHash(hashAlgorithmName,credentials,salt,hashIterations);
-        Object resultAdmin = new SimpleHash(hashAlgorithmName,credentials,saltAdmin,hashIterations);
-        System.out.println("普通用户'tom'密码盐值加密后==>" + result);
-        System.out.println("管理员'admin'密码盐值加密后==>" + resultAdmin);
+        System.out.println("密码盐值加密后==>" + result);
         /*输出：5a72978e5cb41a3f6127226a12915a75，这是加入"tom"这个用户名盐值后计算得到的md5值
          */
     }

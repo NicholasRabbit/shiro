@@ -10,15 +10,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping(value="/shiro")
-public class ShiroController005 {
+public class ShiroController006 {
 
     @RequestMapping(value="/login", method = {RequestMethod.POST})
     public String login(@RequestParam("username") String username, @RequestParam("password") String password){
 
         Subject currentUser = SecurityUtils.getSubject();     //获取一个代表用户的对象
+
         if (!currentUser.isAuthenticated()) {
             //把用户名密码封装进token,模拟把用户名密码保存起来
-            UsernamePasswordToken  token = new UsernamePasswordToken(username, password);
+            UsernamePasswordToken token = new UsernamePasswordToken(username, password);
             token.setRememberMe(true);
             try{
                 currentUser.login(token);     //模拟登录

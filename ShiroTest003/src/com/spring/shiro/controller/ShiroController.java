@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("/shiro")
 public class ShiroController {
 
-    @RequestMapping(value="/login")
+    @RequestMapping(value="/login", method = RequestMethod.POST)  //
     public String login(String username, String password){
-
+        System.out.println("test");
         //这里Subject对象就相当于一个用户
         Subject currentUser = SecurityUtils.getSubject();
 

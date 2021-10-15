@@ -9,27 +9,47 @@
     <!--1,配置shiro的SecurityManager-->
     <bean id="securityManager"  class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
         <property name="cacheManager" ref="cacheManager"></property>
-        <property name="authenticator" ref="authenticator"></property>
-        <property name="realm"  ref="realmOne"></property>      <!--如果有多个realm可用reamls属性<property name="realms">-->
-
+        <property name="authenticator" ref="authenticator"></property>   <!--通过authenticator给S=securityManager配置了两个Realm-->
+        <!--不用authenticator也可以这样在SecurityManager里配置，实际底层还是赋值给了authenticator的类ModularRealmAuthenticator.java
+        <property name="realms">
+            <list>
+                <ref bean="realmOne"></ref>
+                <ref bean="realmTwo"/>
+            </list>
+        </property>-->
     </bean>
 
-    <!--2，配置缓存管理器，注意要加入ehcahe.jar包，并指定好配置文件ehcahe.xml的位置-->
     <bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
         <property name="cacheManagerConfigFile" value="classpath:ehcache.xml"></property>
     </bean>
-    <!--这个的作用待分析？？-->
+
+    <!--这个的作用：设置多个Realm的验证策略,要配置这个认证器，默认认证策略是“AtLeastOneSuccessfulStrategy”,即只要有一个通过就行
+    其作用是调整认证策略：即有可设置一个Realm认证通过就可访问，或者两个Realm认证通过才可访问-->
     <bean id="authenticator"  class="org.apache.shiro.authc.pam.ModularRealmAuthenticator">
+        <property name="realms">   <!--如果都多个Realm的话这里要配置reamls属性，realms是一个集合：private Collection<Realm> realms-->
+            <list>
+                <ref bean="realmOne"></ref>
+                <ref bean="realmTwo"/>
+            </list>
+        </property>
         <property name="authenticationStrategy">
             <bean class="org.apache.shiro.authc.pam.AtLeastOneSuccessfulStrategy"></bean>
+            <!--<bean class="org.apache.shiro.authc.pam.AllSuccessfulStrategy"></bean>     所有Realm验证通过才行 -->
         </property>
     </bean>
 
-    <!--3,配置Realm,需个人自定义一个Realm，要求实现Realm接口，或者实现其子类。可配置多个Realm-->
-    <bean id="realmOne"  class="com.spring.shiro.realm.ShiroRealm004">
-        <!--这里配置了加密属性，即可把用户输入的密码进行加密，MD5是加密方法，1024是加密的次数，
-            配置好之后密码“12345”会被加密1024次，因此在ShiroRealm004里的credentials也要加密尽心比对
-            注意和ShrioTest003的spring.xml配置文件的对比-->
+    <!--3,(1)配置第一个Realm,需个人自定义一个Realm，要求实现Realm接口，或者实现其子类。可配置多个Realm-->
+    <!--配置多Realm要在authenticator和securityManager里进行相关配置-->
+    <bean id="realmOne"  class="com.spring.shiro.realm.ShiroRealmOne">
+        <property name="credentialsMatcher">
+            <bean class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+                <property name="hashAlgorithmName" value="MD5"></property>
+                <property name="hashIterations"  value="1024"></property>
+            </bean>
+        </property>
+    </bean>
+    <!--3,(2)配置第二个Realm-->
+    <bean id="realmTwo"  class="com.spring.shiro.realm.ShiroRealmTwo">
         <property name="credentialsMatcher">
             <bean class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
                 <property name="hashAlgorithmName" value="MD5"></property>
@@ -38,18 +58,15 @@
         </property>
     </bean>
 
-    <!--4,配置LifecyclePostBeanProcessor,它可自动调用在Spring IOC容器中shiro bean的生命周期的相关方法-->
     <bean id="lifecycleBeanProcessor"  class="org.apache.shiro.spring.LifecycleBeanPostProcessor"></bean>
 
-    <!--5,在IOC容器中使用Shiro的注解,必须在配置LifecyclePostBeanProcessor后才可使用-->
     <bean  class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"  depends-on="lifecycleBeanProcessor"></bean>
     <bean  class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
         <property name="securityManager"  ref="securityManager"></property>
     </bean>
 
-    <!--6,配置shiroFilter,注意id值要个web.xml文件内一致-->
     <bean id="shiroFilter"  class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
-        <property name="securityManager" ref="securityManager"/>       <!--注意这里别忘了这个securityManager属性,否则报BeanCreationException,Error creating bean with name 'shiroFilter'-->
+        <property name="securityManager" ref="securityManager"/>
         <property name="filterChainDefinitions">
             <value>
                 /login.jsp = anon

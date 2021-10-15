@@ -51,7 +51,7 @@
          LdapRealm, etc. -->
     <!--三，配置Realm，
         这里个人写的Realm的<bean>，它们都实现了“org.apache.shiro.realm.Realm”接口-->
-    <bean id="jdbcRealm" class="com.spring.shiro.realm.ShiroRealm003">
+    <bean id="jdbcRealm" class="com.spring.shiro.realm.ShiroRealm002">
 
     </bean>
 

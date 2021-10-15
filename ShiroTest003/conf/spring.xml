@@ -15,7 +15,6 @@
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
         <property name="cacheManager" ref="cacheManager"/>
         <property name="authenticator" ref="authenticator"></property>
-
         <property name="realms">
             <list>
                 <ref bean="jdbcRealm"/>
@@ -45,25 +44,12 @@
         </property>
     </bean>
 
-
-    <!-- Used by the SecurityManager to access security data (users, roles, etc).
-         Many other realm implementations can be used too (PropertiesRealm,
-         LdapRealm, etc. -->
     <!--三，配置Realm，
         这里个人写的Realm的<bean>，它们都实现了“org.apache.shiro.realm.Realm”接口-->
-    <bean id="jdbcRealm" class="com.spring.shiro.realm.ShiroRealm003">   <!--这里没有配置MD5加密，和ShroTest004中做对比-->
+    <bean id="jdbcRealm" class="com.spring.shiro.realm.ShiroRealm003">   <!--这里没有配置MD5加密，和ShiroTest004中做对比-->
 
     </bean>
 
-    <!-- =========================================================
-        Shiro Spring-specific integration
-        ========================================================= -->
-    <!-- Post processor that automatically invokes init() and destroy() methods
-         for Spring-configured Shiro objects so you don't have to
-         1) specify an init-method and destroy-method attributes for every bean
-            definition and
-         2) even know which Shiro objects require these methods to be
-            called. -->
     <!--四，配置LifecycleBeanPostProcessor，可用来调用Spring的IOC容器中的生命周期的相关方法-->
     <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
 
@@ -90,6 +76,7 @@
                 /login.jsp = anon
                 /shiro/login = anon     <!--配置Shiro以后，每次访问处理请求的方法都要在这里设置权限-->
                 /shiro/logout = logout  <!--设置登出请求，避免无权限用户使用缓存，造成用户名密码不对也可登录，须在list.jsp页面设置/shiro/logout超链接-->
+                <!--注意/shiro/logout对应的href相对路径是shiro/logout-->
 
                 # everything else requires authentication:
                 /** = authc   <!--这里表示除了login.jsp可匿名访问外，别的都需认证登录才可访问-->

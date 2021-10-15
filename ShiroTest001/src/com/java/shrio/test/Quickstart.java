@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
  */
 
 /*1，这是一个简单程序，用来体验shiro的运行原理及流程，实际开发中有的地方不这样写；
-  2，此程序需结合shiro.ini配置文件执行，shiro.ini里有用户名及密码等信息；
+  2，此程序需结合shiro.ini配置文件执行，com.shiro.ini里有用户名及密码等信息；
 * */
 public class Quickstart {
 
@@ -32,7 +32,7 @@ public class Quickstart {
         // We'll do that by using a factory that can ingest a .ini file and
         // return a SecurityManager instance:
 
-        // Use the shiro.ini file at the root of the classpath
+        // Use the com.shiro.ini file at the root of the classpath
         // (file: and url: prefixes load from files and urls respectively):
         Factory<SecurityManager> factory = new IniSecurityManagerFactory("classpath:shiro.ini");
         SecurityManager securityManager = factory.getInstance();
