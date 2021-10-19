@@ -11,12 +11,13 @@
         <property name="cacheManager" ref="cacheManager"></property>
         <property name="authenticator" ref="authenticator"></property>   <!--通过authenticator给S=securityManager配置了两个Realm-->
         <!--不用authenticator也可以这样在SecurityManager里配置，实际底层还是赋值给了authenticator的类ModularRealmAuthenticator.java
+        授权认证的时候要在这里给sercurityManager配置realms,不要只写authenticator了-->
         <property name="realms">
             <list>
                 <ref bean="realmOne"></ref>
                 <ref bean="realmTwo"/>
             </list>
-        </property>-->
+        </property>
     </bean>
 
     <bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
@@ -76,13 +77,14 @@
         <property name="securityManager" ref="securityManager"/>
         <property name="loginUrl"  value="/login.jsp"></property>
         <property name="successUrl"  value="/list.jsp"></property>
+        <property name="unauthorizedUrl"  value="/unauthorized.jsp"></property>  <!--此处设置未授权用户的登录页面-->
         <property name="filterChainDefinitions">
             <value>
                 /login.jsp = anon
                 /shiro/login = anon
                 /shiro/logout = logout
-                /admin.jsp = roles[admin]   <!--这里设定权限，表示admin.jsp页面只能由-->
-                /user.jsp = roles[tom]
+                /admin.jsp = roles[admin]   <!--这里设定权限，表示admin.jsp页面只能由admin用户访问，下面同理-->
+                /user.jsp = roles[tom]      <!--注意授权语句要写在下面"/**=authc"之前，否则无效，因为第一次赋值优先原则-->
 
                 #anything else requires authentication:
                 /** = authc

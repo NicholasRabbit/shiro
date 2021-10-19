@@ -10,7 +10,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 /*授权代码范例
 1，授权是指设定不同用户有不同的权限，只能访问他权限范围内的内容，也称访问控制
-2，详见spring.xml里shiroFilter的设置
+2，详见spring.xml里shiroFilter的设置，注意认证授权时要给sercurityManager配置realms不要只写authenticator
+3，第二步写完后，还要配置Realm授权，否则仍然是admin无法访问admin.jsp，tom同理；
+   多Realm授权的话，只要有一个通过就可(默认情况下)
+4，授权需要调用ShiroRealm的doAuthorizationInfo(..)方法
 * */
 
 @Controller

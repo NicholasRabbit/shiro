@@ -2,10 +2,14 @@ package com.spring.shiro.realm;
 
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
+
+import java.util.HashSet;
+import java.util.Set;
 
 
 /*多Realm范例
@@ -40,7 +44,7 @@ public class ShiroRealmOne extends AuthorizingRealm {
         //Object credentials = "12345";     //后台加密了，这里就不能用明文密码了
         Object credentials = null;
         if("admin".equals(username)){
-            credentials = "13215500ae4ea87b410201e85837af7f";  //"admin"盐值加密后的值,模拟不用用户登陆后的操作
+            credentials = "13215500ae4ea87b410201e85837af7f";  //"admin"盐值加密后的值,模拟不同用户登陆后的操作
             System.out.println("welcome admin !");
         }else if("tom".equals(username)){
             credentials = "5a72978e5cb41a3f6127226a12915a75";  //"tom"普通用户盐值加密后的值
@@ -72,9 +76,26 @@ public class ShiroRealmOne extends AuthorizingRealm {
                管理员'admin'密码盐值加密后==>13215500ae4ea87b410201e85837af7f  */
     }
 
+    /*授权过程需要用到此方法,授权只要一个Realm就行了，所以这里只给ShiroRealmOne配置
+    1，授权所用的Realm需要继承AuthorizingRealm类，并实现其doAuthorizationInfo(..)方法，
+​       而认证需要继承AuthenticatingRealm类，实现其doAuthenticationInfo(..)方法
+    2，因为AuthorizingRealm抽象类继承了AuthenticatinRealm抽象类，但没有完全实现其内的doAuthenticationInfo(..)方法
+ ​      所以只需继承AuthorizingRealm，实现这两个方法即可*/
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-        return null;
+        //实现授权的步骤：
+        //1，从principals里获取登录用户的信息
+        Object principal = principals.getPrimaryPrincipal();
+        //2，通过用户登录的信息来判断用户的权限，权限在数据库里有设置，这里仅作示范
+        Set<String> roles = new HashSet<>();   //roles是一个Set集合，可以存储多个权限
+        //这两行的含义是，如果用户是“tom”则可以访问user.jsp，如果用户是"admin"则admin.jsp和user.jsp都可以访问
+        roles.add("tom");       //这里指的是把spring.xml里的roles[tom]对应页面的权限给了所有用户集合roles(上面的Set对象)
+        if("admin".equals(principal)){    //这里指只把roles[admin]对应的页面给'admin'用户
+            roles.add("admin");
+        }
+        //3，创建SimpleAuthorizationInfo，并为其roles属性赋值
+        SimpleAuthorizationInfo info = new SimpleAuthorizationInfo(roles);
+        return info;
     }
 
 }
