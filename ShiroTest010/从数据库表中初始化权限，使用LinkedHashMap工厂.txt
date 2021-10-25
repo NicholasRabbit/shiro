@@ -1,0 +1,9 @@
+                /login.jsp = anon
+                /shiro/login = anon
+                /shiro/logout = logout
+                /admin.jsp = roles[admin]   <!--这里设定权限，表示admin.jsp页面只能由admin用户访问，下面同理-->
+                /user.jsp = roles[tom]      <!--注意授权语句要写在下面"/**=authc"之前，否则无效，因为第一次赋值优先原则-->
+
+                #anything else requires authentication:
+                /** = authc
+1，因为在spring.xml里这样的写法太死，如果有多个用户，同时有多个权限，这样写不合适
