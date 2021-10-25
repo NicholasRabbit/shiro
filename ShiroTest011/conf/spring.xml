@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:component-scan base-package="com.spring.shiro.service"></context:component-scan>
+
+    <!--1,配置shiro的SecurityManager-->
+    <bean id="securityManager"  class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <property name="cacheManager" ref="cacheManager"></property>
+        <property name="authenticator" ref="authenticator"></property>   <!--通过authenticator给S=securityManager配置了两个Realm-->
+        <!--不用authenticator也可以这样在SecurityManager里配置，实际底层还是赋值给了authenticator的类ModularRealmAuthenticator.java
+        授权认证的时候要在这里给sercurityManager配置realms,不要只写authenticator了-->
+        <property name="realms">
+            <list>
+                <ref bean="realmOne"></ref>
+                <ref bean="realmTwo"/>
+            </list>
+        </property>
+        <!--设置记住我的有效时间，单位是秒-->
+        <property name="rememberMeManager.cookie.maxAge"  value="30"></property>
+    </bean>
+
+    <bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+        <property name="cacheManagerConfigFile" value="classpath:ehcache.xml"></property>
+    </bean>
+
+
+    <bean id="authenticator"  class="org.apache.shiro.authc.pam.ModularRealmAuthenticator">
+        <property name="realms">   <!--如果都多个Realm的话这里要配置reamls属性，realms是一个集合：private Collection<Realm> realms-->
+            <list>
+                <ref bean="realmOne"></ref>
+                <ref bean="realmTwo"/>
+            </list>
+        </property>
+        <property name="authenticationStrategy">
+            <bean class="org.apache.shiro.authc.pam.AtLeastOneSuccessfulStrategy"></bean>
+            <!--<bean class="org.apache.shiro.authc.pam.AllSuccessfulStrategy"></bean>     所有Realm验证通过才行 -->
+        </property>
+    </bean>
+
+    <!--3,(1)配置第一个Realm,需个人自定义一个Realm，要求实现Realm接口，或者实现其子类。可配置多个Realm-->
+    <!--配置多Realm要在authenticator和securityManager里进行相关配置-->
+    <bean id="realmOne"  class="com.spring.shiro.realm.ShiroRealmOne">
+        <property name="credentialsMatcher">
+            <bean class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+                <property name="hashAlgorithmName" value="MD5"></property>
+                <property name="hashIterations"  value="1024"></property>
+            </bean>
+        </property>
+    </bean>
+    <!--3,(2)配置第二个Realm-->
+    <bean id="realmTwo"  class="com.spring.shiro.realm.ShiroRealmTwo">
+        <property name="credentialsMatcher">
+            <bean class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+                <property name="hashAlgorithmName" value="MD5"></property>
+                <property name="hashIterations"  value="1024"></property>
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="lifecycleBeanProcessor"  class="org.apache.shiro.spring.LifecycleBeanPostProcessor"></bean>
+
+    <bean  class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"  depends-on="lifecycleBeanProcessor"></bean>
+    <bean  class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+        <property name="securityManager"  ref="securityManager"></property>
+    </bean>
+
+    <!--以下属性是配置哪些页面受到保护，和访问这些页面所需要的权限
+            (1), anon: 只可以被匿名访问，不需登录，即所有人都可以访问，若有人访问其它无权限的也会自动转到这里
+                       如本例中，访问register.jsp和unauthorized.jsp都活跳转到login.jsp
+            (2), authc: 必须通过认证，即登录之后才能访问的页面
+            (3), logout: 登出
+            (4), roles: 通过角色过滤
+            (5), url(即login.jsp)支持Ant格式路径-->
+    <bean id="shiroFilter"  class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <property name="securityManager" ref="securityManager"/>
+        <property name="loginUrl"  value="/login.jsp"></property>
+        <property name="successUrl"  value="/list.jsp"></property>
+        <property name="unauthorizedUrl"  value="/unauthorized.jsp"></property>  <!--此处设置未授权用户的登录页面-->
+        <!--<property name="filterChainDefinitions">
+            <value>
+                /login.jsp = anon
+                /shiro/login = anon
+                /shiro/logout = logout
+                /admin.jsp = roles[admin]   &lt;!&ndash;这里设定权限，表示admin.jsp页面只能由admin用户访问，下面同理&ndash;&gt;
+                /user.jsp = roles[tom]      &lt;!&ndash;注意授权语句要写在下面"/**=authc"之前，否则无效，因为第一次赋值优先原则&ndash;&gt;
+
+                #anything else requires authentication:
+                /** = authc
+            </value>
+        </property>-->
+        <property name="filterChainDefinitionMap" ref="filterChainDefinitionMap"></property>
+    </bean>
+    <!--不用以上的属性，在这里写法太死，配置一个bean工厂即可
+        由底层源码可知，上面的filterChainDefinitions实际是给ShiriFactoryBean.java的filterChainDefinitionMap属性赋值
+        因此这里自定义一个bean来给它赋值，即可达到同样的效果，而自定义的Map里就可以从数据库里查得上面<value>授权配置了-->
+    <!--配置一个bean,实际是个Map,从下面的Map工厂类里获取，然后把这个bean赋值给filterChainDefinitionMap属性即可。-->
+    <bean id="filterChainDefinitionMap" factory-bean="filterChainDefinitionMapBuilder"
+                                        factory-method="buildFilterChainDefinitionMap"></bean>
+    <!--配置工厂类-->
+    <bean id="filterChainDefinitionMapBuilder"  class="com.spring.shiro.factory.FilterChainDefinitionMapBuilder"></bean>
+
+
+</beans>

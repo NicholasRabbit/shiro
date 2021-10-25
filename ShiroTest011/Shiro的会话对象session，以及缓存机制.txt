@@ -1,0 +1,3 @@
+ Shiro的session对象，
+1，它可在service层中，获取controller层的HttpSession存入的数据，在实际开发中很方便好用
+2，还有一个SessionDao可以操作数据库
