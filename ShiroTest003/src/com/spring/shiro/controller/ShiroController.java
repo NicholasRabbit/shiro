@@ -17,7 +17,7 @@ public class ShiroController {
         //这里Subject对象就相当于一个用户
         Subject currentUser = SecurityUtils.getSubject();
 
-        if( !currentUser.isAuthenticated() ){
+        if( !currentUser.isAuthenticated() ){  //这里条件表示没有验证时就进行以下验证步骤，如果验证了(以前登录过记住密码了等)就直接登录
             //1，把浏览器发来用户和密码封装进UsernamePasswordToken对象里，在Realm里进行验证
             UsernamePasswordToken  token = new UsernamePasswordToken(username,password);
             //这里的token对象和ShiroRealm003里的token哈希值一样，说明是同一个对象，这里把token对象传到ShiroReal003.java里了
