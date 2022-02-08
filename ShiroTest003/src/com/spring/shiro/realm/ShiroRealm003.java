@@ -34,7 +34,7 @@ public class ShiroRealm003 extends AuthorizingRealm {
 
         //以下是把浏览器端输入的用户名密码和数据库中的比较
         SimpleAuthenticationInfo authenInfo = new SimpleAuthenticationInfo(principal, credentials,realmName);
-        return authenInfo;  //把认证信息返回
+        return authenInfo;  //把认证结果信息返回
 
         /*注意如果以上信息认证通过，shiro会有缓存，这种情况下，在登陆页面无论输入什么都可登录
           若要避免此种情况需设置logout操作，详见spring.xml配置文件和转发到的页面list.jsp里的代码*/

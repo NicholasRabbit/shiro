@@ -6,7 +6,9 @@ public class FilterChainDefinitionMapBuilder {
 
     public LinkedHashMap<String,String>  buildFilterChainDefinitionMap(){
         LinkedHashMap<String,String>  filterChainDefinitionMap = new LinkedHashMap<>();
-        //这里配置和spring.xml里作用一样，底层都是赋值给了ShiroFilterFactoryBean.java的filterChainDefinitionMap属性
+        /*这里配置和spring.xml里作用一样，底层都是赋值给了ShiroFilterFactoryBean.java的filterChainDefinitionMap属性
+          在这里写比较灵活，在这里可以从数据库中获取数据
+        * */
         filterChainDefinitionMap.put("/login.jsp", "anon");
         filterChainDefinitionMap.put("/shiro/login", "anon");
         filterChainDefinitionMap.put("/shiro/login", "anon");

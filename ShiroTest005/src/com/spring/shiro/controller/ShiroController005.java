@@ -17,11 +17,11 @@ public class ShiroController005 {
 
         Subject currentUser = SecurityUtils.getSubject();     //获取一个代表用户的对象
         if (!currentUser.isAuthenticated()) {
-            //把用户名密码封装进token,模拟把用户名密码保存起来
+            //1，把浏览器发来用户和密码封装进UsernamePasswordToken对象里，然后在Realm里进行验证
             UsernamePasswordToken  token = new UsernamePasswordToken(username, password);
             token.setRememberMe(true);
             try{
-                currentUser.login(token);     //模拟登录
+                currentUser.login(token);     //2,底层实际是调用ShrioRealm.java里的doGetAuthenticationInfo(..)进行验证
             }catch(UnknownAccountException e){
                 System.out.println("未知用户异常==>" + e.getMessage());
             }catch(LockedAccountException e){
