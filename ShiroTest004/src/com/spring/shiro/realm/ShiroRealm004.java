@@ -42,7 +42,7 @@ public class ShiroRealm004 extends AuthorizingRealm {
         String  hashAlgorithmName = "MD5";
         Object credentials = "12345";
         Object salt = null;
-        int hashIterations = 1024;
+        int hashIterations = 1024;  //加密次数
         Object result = new SimpleHash(hashAlgorithmName,credentials,null,hashIterations);    //先不使用盐值加密
         System.out.println("密码加密后==>" + result);
         /*输出：ca0d5d5fc5c1175e0927f4fd60db114a，因为spring.xml文件中第3项中个人Realm配置了属性credentialsMatcher
