@@ -1,1 +1,3 @@
-shiro练习代码备份
+### Shiro Code
+
+A code demo of Apache Shiro framework.
